@@ -4,6 +4,6 @@ with import <nixpkgs> {};
       black
       pyright
 
-      python311Packages.matplotlib
+      python312Packages.matplotlib
     ];
   }
