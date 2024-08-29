@@ -45,6 +45,9 @@ while poeng < 3 or poeng_datamaskin < 3:
         print("Du tapte og jeg fikk et poeng.")
         poeng_datamaskin += 1
 
+    print(f"Du har: {poeng} poeng.")
+    print(f"Jeg har: {poeng_datamaskin} poeng.\n")
+
 if poeng > poeng_datamaskin:
     print("Du vant!")
 else:
