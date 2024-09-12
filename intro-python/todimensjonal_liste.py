@@ -21,3 +21,17 @@ sjakkbrett = [
 ]
 
 [print(rad) for rad in sjakkbrett]
+
+# 10 x 10 spillbrett med tilfeldige som er True
+import random
+
+rader = 10
+kolonner = 10
+antall_true = 20
+
+spillbrett = [[False for _ in range(kolonner)] for _ in range(rader)]
+
+for _ in range(antall_true):
+    spillbrett[random.randint(0, rader - 1)][random.randint(0, kolonner - 1)] = True
+
+[print(rad) for rad in spillbrett]
