@@ -9,13 +9,22 @@ def kolonne_og_rad_input(spiller):
     while True:
         try:
             kolonne = int(input("Hvilken kolonne vil du plassere i?\n"))
+            if not (kolonne >= 0 and kolonne <= 2):
+                print("Må være fra og med 0 til og med 2")
+                continue
+
             rad = int(input("Hvilken rad vil du plassere i?\n"))
+            if not (rad >= 0 and rad <= 2):
+                print("Må være fra og med 0 til og med 2")
+                continue
+
         except ValueError:
+            print("Skriv et tall")
             continue
         else:
             break
 
-    if brett[rad][kolonne] != " ":
+    if brett[rad][kolonne] == " ":
         brett[rad][kolonne] = spiller
 
 
