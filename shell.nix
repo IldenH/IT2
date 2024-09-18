@@ -5,5 +5,7 @@ with import <nixpkgs> {};
       pyright
 
       python312Packages.matplotlib
+
+      plantuml
     ];
   }

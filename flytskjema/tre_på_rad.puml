@@ -1,0 +1,32 @@
+@startuml
+start
+:lager en todimensjonal liste som er 3 rader og 3 kolonner (spillbrettet);
+
+repeat :skriv ut hvem sin tur det er;
+	repeat :spør spilleren hvilken rad og kolonne de vil plassere i;
+		backward:skriv ut
+		"kolonnen og raden må være 
+		fra og med 0 til og med 2";
+	repeat while (er raden og kolonnnen gyldig?) is (nei) not (ja)
+	if (valgte spilleren en rute som allerede er tatt?) then (nei)
+		:skriv over ruten;
+	else (ja)
+		note
+			gir dem ikke 
+			et nytt forsøk 
+			dersom de prøvde 
+			å plassere hvor
+			det allerede er plassert
+		end note
+	endif
+
+	repeat while (har noen fått 3 på rad?) is (nei) not (ja)
+
+if (hvem vant?) then (spiller 1)
+	:skriv ut "spiller 1 vant";
+	kill
+else (spiller 2)
+	:skriv ut "spiller 2 vant";
+	kill
+endif
+@enduml

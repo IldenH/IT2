@@ -1,0 +1,19 @@
+@startuml
+title Finne forekomster av bokstaver i en tekst
+
+start
+:les av tekst fil;
+:lag en ordbok med alle bokstaver i alfabetet satt til 0 forekomster;
+
+repeat :les av tegn i tekst;
+if (er tegnet en bokstav i alfabetet?) then (ja)
+	:øk forekomster av den bokstaven med 1;
+else (nei)
+endif
+backward:neste tegn;
+repeat while (siste tegn i teksten?) is (nei) not (ja)
+
+:skriv ut forekomstene;
+
+kill
+@enduml
