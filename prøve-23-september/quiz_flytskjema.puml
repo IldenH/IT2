@@ -1,0 +1,21 @@
+@startuml
+start
+:spør "Kva er hovedstaden i {tilfeldig_land}";
+if (riktig svar) then (ja)
+	:øk antall riktige med 1;
+else (nei)
+endif
+
+:spør "Kva naboland har {tilfeldig_land}";
+if (riktig svar) then (ja)
+	:øk antall riktige med 1;
+else (nei)
+endif
+
+:spør "Kor mange innbygjarar er det i {tilfeldig_land}";
+if (riktig svar) then (ja)
+	:øk antall riktige med 1;
+else (nei)
+endif
+end
+@enduml
