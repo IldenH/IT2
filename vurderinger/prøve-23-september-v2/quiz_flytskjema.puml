@@ -1,0 +1,27 @@
+@startuml
+start
+repeat :still et tilfeldig spørsmål om et tilfeldig land;
+	if (handler spørsmålet om innbygger antall?) then (ja)
+		if (er spørsmålet innenfor 10% av riktig?) then (ja)
+			:øk antall riktige med 1;
+		else (nei)
+		endif
+	else (nei)
+		if (riktig svar?) then (ja)
+			:øk antall riktige med 1;
+		else (nei)
+		endif
+	endif
+repeat while (er 3 spørsmål stilt?) is (nei) not (ja)
+
+:skriv ut antall riktige av antall spørsmål og gi en vurdering;
+
+if (er alle riktige?) then (ja)
+	:skriv ut at alle er riktige;
+else if (er alle feil?) then (ja)
+	:skriv ut at alle er feil;
+else (nei)
+	:skriv ut hvilke spørsmål som var riktig og hvilke som var feil;
+endif
+end
+@enduml
