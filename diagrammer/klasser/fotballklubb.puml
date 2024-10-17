@@ -1,0 +1,26 @@
+@startuml
+skinparam groupInheritance 2
+
+class Person {
+	navn: str
+}
+class Spiller {
+	lag: str
+	posisjon: str
+}
+Person <|- Spiller
+class Trener {
+	spesialisering: str
+	metode()
+}
+Person <|- Trener
+class Klubb {
+	navn: str
+	medlemmer: list[Person]
+}
+class Lag {
+	navn: str
+	trener: Trener
+	spillere: list[Spiller]
+}
+@enduml
