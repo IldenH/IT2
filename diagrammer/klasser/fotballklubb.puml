@@ -3,24 +3,32 @@ skinparam groupInheritance 2
 
 class Person {
 	navn: str
+	metode()
 }
 class Spiller {
 	lag: str
 	posisjon: str
+	metode()
 }
-Person <|- Spiller
+Person <|- Spiller : 0..*
 class Trener {
 	spesialisering: str
 	metode()
 }
-Person <|- Trener
+Person <|- Trener : 0..*
 class Klubb {
 	navn: str
 	medlemmer: list[Person]
+	lag: list[Lag]
+	metode()
 }
 class Lag {
 	navn: str
 	trener: Trener
 	spillere: list[Spiller]
+	metode()
 }
+Lag <|- Spiller : 0..* 
+Lag <|- Klubb : 0..*
+Trener <|- Lag : 1
 @enduml
