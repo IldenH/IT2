@@ -5,6 +5,7 @@ with import <nixpkgs> {};
       pyright
 
       python312Packages.matplotlib
+      python312Packages.pygame
 
       plantuml
     ];
