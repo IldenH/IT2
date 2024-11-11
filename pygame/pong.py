@@ -14,12 +14,18 @@ class Player(pygame.sprite.Sprite):
         self.speed = 1.5
 
     def update(self, pressed_keys):
-        if pressed_keys[key.K_UP] or pressed_keys[key.K_w]:
+        self.__take_input(pressed_keys)
+        self.__check_bounds()
+
+    def __take_input(self, pressed_keys):
+        """Take pygame inputs and make player move"""
+        if pressed_keys[key.K_UP] or pressed_keys[key.K_w] or pressed_keys[key.K_k]:
             self.rectangle.move_ip(0, -self.speed)
-        if pressed_keys[key.K_DOWN] or pressed_keys[key.K_s]:
+        if pressed_keys[key.K_DOWN] or pressed_keys[key.K_s] or pressed_keys[key.K_j]:
             self.rectangle.move_ip(0, self.speed)
 
-        # Keep player on the screen
+    def __check_bounds(self):
+        """Keep player on the screen"""
         if self.rectangle.top <= SCREEN_OFFSET:
             self.rectangle.top = SCREEN_OFFSET
         if self.rectangle.bottom >= SCREEN_HEIGHT - SCREEN_OFFSET:
