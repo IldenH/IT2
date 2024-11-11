@@ -1,46 +1,29 @@
 import pygame
+import pygame.locals as key
 
-from pygame.locals import (
-    K_UP,
-    K_DOWN,
-    K_LEFT,
-    K_RIGHT,
-    K_w,
-    K_a,
-    K_s,
-    K_d,
-    K_ESCAPE,
-    KEYDOWN,
-)
+SCREEN_OFFSET = 30
 
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super(Player, self).__init__()
-        self.surface = pygame.Surface((75, 25))
+        self.surface = pygame.Surface((25, 75))
         self.surface.fill((255, 255, 255))
         self.rectangle = self.surface.get_rect()
-        self.speed = 1
+        self.rectangle.move_ip(SCREEN_OFFSET, SCREEN_OFFSET)
+        self.speed = 1.5
 
     def update(self, pressed_keys):
-        if pressed_keys[K_UP] or pressed_keys[K_w]:
+        if pressed_keys[key.K_UP] or pressed_keys[key.K_w]:
             self.rectangle.move_ip(0, -self.speed)
-        if pressed_keys[K_DOWN] or pressed_keys[K_s]:
+        if pressed_keys[key.K_DOWN] or pressed_keys[key.K_s]:
             self.rectangle.move_ip(0, self.speed)
-        if pressed_keys[K_LEFT] or pressed_keys[K_a]:
-            self.rectangle.move_ip(-self.speed, 0)
-        if pressed_keys[K_RIGHT] or pressed_keys[K_d]:
-            self.rectangle.move_ip(self.speed, 0)
 
         # Keep player on the screen
-        if self.rectangle.left < 0:
-            self.rectangle.left = 0
-        if self.rectangle.right > SCREEN_WIDTH:
-            self.rectangle.right = SCREEN_WIDTH
-        if self.rectangle.top <= 0:
-            self.rectangle.top = 0
-        if self.rectangle.bottom >= SCREEN_HEIGHT:
-            self.rectangle.bottom = SCREEN_HEIGHT
+        if self.rectangle.top <= SCREEN_OFFSET:
+            self.rectangle.top = SCREEN_OFFSET
+        if self.rectangle.bottom >= SCREEN_HEIGHT - SCREEN_OFFSET:
+            self.rectangle.bottom = SCREEN_HEIGHT - SCREEN_OFFSET
 
 
 pygame.init()
@@ -57,8 +40,8 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        elif event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
+        elif event.type == key.KEYDOWN:
+            if event.key == key.K_ESCAPE:
                 running = False
 
     pressed_keys = pygame.key.get_pressed()
