@@ -2,14 +2,15 @@ import pygame
 import pygame.locals as key
 import random
 
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-SCREEN_OFFSET = 30
+
+class Screen:
+    def __init__(self) -> None:
+        self.width = 800
+        self.height = 600
+        self.offset = 30
 
 
-pygame.init()
-
-screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+screen = Screen()
 
 
 class Character(pygame.sprite.Sprite):
@@ -25,16 +26,16 @@ class Character(pygame.sprite.Sprite):
 
     def check_bounds(self):
         """Keep character on the screen"""
-        if self.rect.top <= SCREEN_OFFSET:
-            self.rect.top = SCREEN_OFFSET
-        if self.rect.bottom >= SCREEN_HEIGHT - SCREEN_OFFSET:
-            self.rect.bottom = SCREEN_HEIGHT - SCREEN_OFFSET
+        if self.rect.top <= screen.offset:
+            self.rect.top = screen.offset
+        if self.rect.bottom >= screen.height - screen.offset:
+            self.rect.bottom = screen.height - screen.offset
 
 
 class Player(Character):
     def __init__(self):
         super().__init__()
-        self.rect.move_ip(SCREEN_OFFSET, SCREEN_OFFSET)
+        self.rect.move_ip(screen.offset, screen.offset)
 
     def update(self, pressed_keys):
         self.__move(pressed_keys)
@@ -51,7 +52,7 @@ class Player(Character):
 class Enemy(Character):
     def __init__(self):
         super().__init__()
-        self.rect.move_ip(SCREEN_WIDTH - 2 * SCREEN_OFFSET, SCREEN_OFFSET)
+        self.rect.move_ip(screen.width - 2 * screen.offset, screen.offset)
 
     def update(self, pressed_keys):
         self.__move()
@@ -71,7 +72,7 @@ class Ball(Character):
             self.image, (255, 255, 255), (self.radius, self.radius), self.radius
         )
         self.rect = self.image.get_rect()
-        self.rect.move_ip(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        self.rect.move_ip(screen.width / 2, screen.height / 2)
         self.speed = random.randint(1, 10)
         self.velocity = (
             random.choice((-self.speed, self.speed)),
@@ -90,36 +91,50 @@ class Ball(Character):
         """Keep ball on screen"""
         if self.rect.top <= 0:
             self.rect.top = 0
-        if self.rect.bottom >= SCREEN_HEIGHT:
-            self.rect.bottom = SCREEN_HEIGHT
+        if self.rect.bottom >= screen.height:
+            self.rect.bottom = screen.height
         if self.rect.left <= 0:
             self.rect.left = 0
-        if self.rect.right >= SCREEN_WIDTH:
-            self.rect.right = SCREEN_WIDTH
+        if self.rect.right >= screen.width:
+            self.rect.right = screen.width
 
 
-sprites = pygame.sprite.Group()
-sprites.add(Player())
-sprites.add(Enemy())
-sprites.add(Ball())
+class Game:
+    def __init__(self):
+        self.running = True
+        self.screen = pygame.display.set_mode([screen.width, screen.height])
+        self.fps = 60
 
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        elif event.type == key.KEYDOWN:
-            if event.key == key.K_ESCAPE:
-                running = False
+        self.sprites = pygame.sprite.Group()
+        self.sprites.add(Player())
+        self.sprites.add(Enemy())
+        self.sprites.add(Ball())
 
-    pressed_keys = pygame.key.get_pressed()
-    sprites.update(pressed_keys)
+    def run(self):
+        pygame.init()
+        while self.running:
+            self.handle_events()
+            self.update()
+        pygame.quit()
 
-    screen.fill((0, 0, 0))
-    sprites.draw(screen)
+    def update(self):
+        self.sprites.update(pygame.key.get_pressed())
+        self.draw()
 
-    pygame.display.flip()
+        pygame.display.update()
+        pygame.time.Clock().tick(self.fps)
 
-    pygame.time.Clock().tick(60)
+    def draw(self):
+        self.screen.fill("black")
+        self.sprites.draw(self.screen)
 
-pygame.quit()
+    def handle_events(self):
+        for event in pygame.event.get():
+            escape = event.type == key.KEYDOWN and event.key == key.K_ESCAPE
+            if event.type == pygame.QUIT or escape:
+                self.running = False
+
+
+if __name__ == "__main__":
+    game = Game()
+    game.run()
