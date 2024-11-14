@@ -24,12 +24,16 @@ class Character(pygame.sprite.Sprite):
     def update(self):
         pass
 
-    def check_bounds(self):
+    def check_bounds(self, offset=screen.offset):
         """Keep character on the screen"""
-        if self.rect.top <= screen.offset:
-            self.rect.top = screen.offset
-        if self.rect.bottom >= screen.height - screen.offset:
-            self.rect.bottom = screen.height - screen.offset
+        if self.rect.top <= offset:
+            self.rect.top = offset
+        if self.rect.bottom >= screen.height - offset:
+            self.rect.bottom = screen.height - offset
+        if self.rect.left <= offset:
+            self.rect.left = offset
+        if self.rect.right >= screen.width - offset:
+            self.rect.right = screen.width - offset
 
 
 class Player(Character):
@@ -81,22 +85,11 @@ class Ball(Character):
 
     def update(self, pressed_keys):
         self.__move()
-        self.check_bounds()
+        self.check_bounds(offset=0)
 
     def __move(self):
         """Move ball randomly"""
         self.rect.move_ip(self.velocity)
-
-    def check_bounds(self):
-        """Keep ball on screen"""
-        if self.rect.top <= 0:
-            self.rect.top = 0
-        if self.rect.bottom >= screen.height:
-            self.rect.bottom = screen.height
-        if self.rect.left <= 0:
-            self.rect.left = 0
-        if self.rect.right >= screen.width:
-            self.rect.right = screen.width
 
 
 class Game:
