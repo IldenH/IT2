@@ -1,5 +1,6 @@
 import pygame
 import pygame.locals as key
+import random
 
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -57,13 +58,50 @@ class Enemy(Character):
         self.check_bounds()
 
     def __move(self):
-        """Take pygame inputs and make player move"""
+        """Move enemy towards ball"""
         self.rect.move_ip(0, self.speed)
+
+
+class Ball(Character):
+    def __init__(self):
+        super().__init__()
+        self.radius = 50
+        self.image = pygame.Surface((self.radius * 2, self.radius * 2), pygame.SRCALPHA)
+        pygame.draw.circle(
+            self.image, (255, 255, 255), (self.radius, self.radius), self.radius
+        )
+        self.rect = self.image.get_rect()
+        self.rect.move_ip(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+        self.speed = random.randint(1, 10)
+        self.velocity = (
+            random.choice((-self.speed, self.speed)),
+            random.choice((-self.speed, self.speed)),
+        )
+
+    def update(self, pressed_keys):
+        self.__move()
+        self.check_bounds()
+
+    def __move(self):
+        """Move ball randomly"""
+        self.rect.move_ip(self.velocity)
+
+    def check_bounds(self):
+        """Keep ball on screen"""
+        if self.rect.top <= 0:
+            self.rect.top = 0
+        if self.rect.bottom >= SCREEN_HEIGHT:
+            self.rect.bottom = SCREEN_HEIGHT
+        if self.rect.left <= 0:
+            self.rect.left = 0
+        if self.rect.right >= SCREEN_WIDTH:
+            self.rect.right = SCREEN_WIDTH
 
 
 sprites = pygame.sprite.Group()
 sprites.add(Player())
 sprites.add(Enemy())
+sprites.add(Ball())
 
 running = True
 while running:
