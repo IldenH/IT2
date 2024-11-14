@@ -21,9 +21,6 @@ class Character(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.speed = 10
 
-    def update(self):
-        pass
-
     def check_bounds(self, offset=screen.offset):
         """Keep character on the screen"""
         if self.rect.top <= offset:
