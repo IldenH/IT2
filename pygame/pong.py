@@ -67,14 +67,14 @@ class Enemy(Character):
 class Ball(Character):
     def __init__(self):
         super().__init__()
-        self.radius = 50
+        self.radius = 30
         self.image = pygame.Surface((self.radius * 2, self.radius * 2), pygame.SRCALPHA)
         pygame.draw.circle(
             self.image, (255, 255, 255), (self.radius, self.radius), self.radius
         )
         self.rect = self.image.get_rect()
         self.rect.move_ip(screen.width / 2, screen.height / 2)
-        self.speed = random.randint(1, 10)
+        self.speed = 10
         self.velocity = (
             random.choice((-self.speed, self.speed)),
             random.choice((-self.speed, self.speed)),
@@ -88,6 +88,10 @@ class Ball(Character):
         """Move ball randomly"""
         self.rect.move_ip(self.velocity)
 
+    def handle_paddle_collision(self, paddle):
+        if self.rect.colliderect(paddle.rect):
+            self.velocity = (-self.velocity[0], self.velocity[1])
+
 
 class Game:
     def __init__(self):
@@ -96,9 +100,12 @@ class Game:
         self.fps = 60
 
         self.sprites = pygame.sprite.Group()
-        self.sprites.add(Player())
-        self.sprites.add(Enemy())
-        self.sprites.add(Ball())
+        self.player = Player()
+        self.enemy = Enemy()
+        self.ball = Ball()
+        self.sprites.add(self.player)
+        self.sprites.add(self.enemy)
+        self.sprites.add(self.ball)
 
     def run(self):
         pygame.init()
@@ -109,6 +116,8 @@ class Game:
 
     def update(self):
         self.sprites.update(pygame.key.get_pressed())
+        self.ball.handle_paddle_collision(self.player)
+        self.ball.handle_paddle_collision(self.enemy)
         self.draw()
 
         pygame.display.update()
