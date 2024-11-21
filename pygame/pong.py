@@ -75,10 +75,9 @@ class Ball(Character):
         self.rect = self.image.get_rect()
         self.rect.move_ip(screen.width / 2, screen.height / 2)
         self.speed = 10
-        self.velocity = (
-            random.choice((-self.speed, self.speed)),
-            random.choice((-self.speed, self.speed)),
-        )
+        self.velocity = pygame.math.Vector2()
+        self.velocity.x = random.choice((-self.speed, self.speed))
+        self.velocity.y = random.choice((-self.speed, self.speed))
 
     def update(self, pressed_keys):
         self.__move()
@@ -90,7 +89,20 @@ class Ball(Character):
 
     def handle_paddle_collision(self, paddle):
         if self.rect.colliderect(paddle.rect):
-            self.velocity = (-self.velocity[0], self.velocity[1])
+            self.flip_x()
+
+    def check_bounds(self, offset=screen.offset):
+        """Keep character on the screen"""
+        if self.rect.x >= screen.width - 2 * self.radius or self.rect.x <= 0:
+            self.flip_x()
+        if self.rect.y >= screen.height - 2 * self.radius or self.rect.y <= 0:
+            self.flip_y()
+
+    def flip_x(self) -> None:
+        self.velocity = (-self.velocity[0], self.velocity[1])
+
+    def flip_y(self) -> None:
+        self.velocity = (self.velocity[0], -self.velocity[1])
 
 
 class Game:
