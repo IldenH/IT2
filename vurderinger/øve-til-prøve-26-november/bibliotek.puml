@@ -1,0 +1,32 @@
+@startuml
+class Book {
+  tittel: str
+  forfattere: list
+  isbn: int
+  utgivelsesår: int
+  forlag: str = ""
+  + list_info(self) -> str
+  + list_forfattere(self) -> str
+}
+
+class Lydbok {
+  lydfil: str
+  + spill_av(self) -> None
+}
+
+class Fagbok {
+  fag: str
+}
+
+Lydbok --> Book
+Fagbok --> Book
+
+class Bibliotek {
+  bøker: dict = {}
+  + add_book(self, book: Book) -> None
+  + remove_book(self, book: str) -> None
+  + list_books(self) -> None
+}
+
+Bibliotek::bøker --o Book
+@enduml
