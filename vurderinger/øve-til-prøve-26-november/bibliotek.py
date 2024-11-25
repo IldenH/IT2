@@ -41,6 +41,9 @@ class Bibliotek:
     def add_book(self, book: Book) -> None:
         self.bøker[book.tittel] = book
 
+    def remove_book(self, book: str) -> None:
+        self.bøker.pop(book)
+
     def list_books(self) -> None:
         for book in self.bøker.values():
             print(book.list_info())
