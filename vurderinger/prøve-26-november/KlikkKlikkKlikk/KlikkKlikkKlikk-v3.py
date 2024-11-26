@@ -63,7 +63,11 @@ class Game:
             elif event.type == self.game_end_event:
                 self.handle_new_game()
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                self.clicks += 1
+                if pygame.mouse.get_pos() == (
+                    self.rectangle.positition.x,
+                    self.rectangle.positition.y,
+                ):
+                    self.clicks += 1
 
     def handle_new_game(self) -> None:
         print(f"Du trykket {self.clicks} ganger!")
