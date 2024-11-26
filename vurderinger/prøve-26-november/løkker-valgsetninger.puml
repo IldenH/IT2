@@ -1,0 +1,26 @@
+@startuml
+start
+:definer funksjonene BMI(), BMI_centimer() og BMI_vurdering(), og klassen Kalkulator;
+:skriv ut "BMI-kalkulator";
+while (kalkulatoren kjører?) is (ja)
+	repeat :ta input om høyde og vekt;
+	repeat while (er inputen heltall?) is (nei, skriver ut at det må være heltall) not (ja)
+	:regner ut BMI;
+
+	if (BMI mindre enn eller lik 18.4?) then (ja)
+		:skriv ut at BMI-en er undervektig;
+		(nei) elseif (BMI mellom 18.5 og 24.9?) then (ja)
+		:skriv ut at BMI-en er normalvektig;
+		(nei) elseif (BMI over 25?) then (ja)
+		:skriv ut at BMI-en er overvektig;
+	else (nei)
+		:skriv ut at kalkulatoren ikke kunne vurdere BMI;
+	endif
+
+	backward:starte kalkulatoren på nytt;
+endwhile (nei)
+
+:skriv ut "Takk for nå.";
+stop
+
+@enduml
