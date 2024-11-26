@@ -10,7 +10,7 @@ class Screen:
 
 
 SCREEN = Screen()
-TIME_SECONDS = 10
+TIME_SECONDS = 2
 
 
 class Game:
@@ -53,13 +53,19 @@ class Game:
 
 if __name__ == "__main__":
     beste_resultat = 0
-    while True:
-        print(f"Trykk så fort som mulig på {TIME_SECONDS} sekunder!")
-        game = Game()
-        game.run()
-        print(f"Du trykket {game.clicks} ganger!")
-        if game.clicks > beste_resultat:
-            print("Ny rekord!")
-        else:
-            print("Ikke ny rekord, prøv igjen!")
-        print(f"Beste resultat: {beste_resultat}")
+    print(f"Trykk så fort som mulig på {TIME_SECONDS} sekunder!")
+    game = Game()
+    game.run()
+    print(f"Du trykket {game.clicks} ganger!")
+
+    if game.clicks > beste_resultat:
+        print("Ny rekord!")
+        beste_resultat = game.clicks
+    else:
+        print("Ikke ny rekord, prøv igjen!")
+
+    resultat_tekst = f"Beste resultat: {beste_resultat}"
+    print(resultat_tekst)
+    # https://www.geeksforgeeks.org/writing-to-file-in-python/
+    resultat_fil = open("resultat.txt", "w")
+    resultat_fil.write(resultat_tekst)
