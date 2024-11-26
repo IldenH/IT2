@@ -1,0 +1,28 @@
+@startuml
+
+class Car {
+  + registreringsnummer: str
+  + model: str
+  + color: str
+	- parkingprice: float = 1.5
+	+ list_info() -> str
+}
+
+class Lastebil {
+	- parkingprice: float = 3.0
+}
+
+class Parkinghouse {
+	+ space: int
+	+ cars: dict = {}
+  + add_car(car: Car, time: datetime.datetime) -> None
+  + remove_car(car_registreringsnummer: str, time) -> None
+  + calculate_minutes_parked(car: Car, time) -> int
+  + calculate_price(car: Car, parkeringstid: int) -> float
+  + list_cars(color: str = "") -> None
+}
+
+Parkinghouse::cars --o Car
+Lastebil --> Car
+
+@enduml
