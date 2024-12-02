@@ -4,8 +4,13 @@ with import <nixpkgs> {};
       black
       pyright
 
-      python312Packages.matplotlib
-      python312Packages.pygame
+      (python312.withPackages (
+        packages:
+          with packages; [
+            matplotlib
+            pygame
+          ]
+      ))
 
       plantuml
     ];
