@@ -64,9 +64,14 @@ class PixelArtApp:
             ("s", "Save the screen to a PNG file"),
             ("h", "Toggle this help screen"),
         ]
-        for i, (key, description) in enumerate(commands):
+        for index, (key, description) in enumerate(commands):
             text = self.font.render(f"{key}: {description}", True, self.text_color)
-            self.surface.blit(text, (50, 25 + i * 40))
+            padding = 50
+            gap = (self.screen.height - padding) // len(commands)
+            self.surface.blit(
+                text,
+                (padding, padding + index * gap),
+            )
 
     def run(self) -> None:
         while self.running:
