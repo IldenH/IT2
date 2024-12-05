@@ -22,7 +22,6 @@ class PixelArtApp:
         self.text_color = pygame.Color("black")
 
         self.drawing_color = pygame.Color("black")
-        self.mouse_button_down = False
         self.help_shown = False
         self.font = pygame.font.Font(None, 36)
         self.running = True
@@ -93,14 +92,9 @@ class PixelArtApp:
         x, y = pygame.mouse.get_pos()
         x_pixel = x // self.pixel_size
         y_pixel = y // self.pixel_size
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        mouse_button_down = pygame.mouse.get_pressed()[0]
+        if event.type == pygame.MOUSEMOTION and mouse_button_down:
             self.pixels[y_pixel][x_pixel] = self.drawing_color
-            self.mouse_button_down = True
-        elif event.type == pygame.MOUSEBUTTONUP:
-            self.mouse_button_down = False
-        elif event.type == pygame.MOUSEMOTION:
-            if self.mouse_button_down:
-                self.pixels[y_pixel][x_pixel] = self.drawing_color
 
     def handle_keys(self, event) -> None:
         if event.key == pygame.K_h:
