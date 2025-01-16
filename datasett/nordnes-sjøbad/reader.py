@@ -11,8 +11,13 @@ def parse_row(row):
     except ValueError:
         temperatur = "-"
 
-    if temperatur != "-":
-        data[tid] = temperatur
+    try:
+        lufttemperatur = float(row["lufttemperatur"])
+    except ValueError:
+        lufttemperatur = "-"
+
+    if temperatur != "-" and lufttemperatur != "-":
+        data[tid] = {"temperatur": temperatur, "lufttemperatur": lufttemperatur}
 
 
 def parse_file(contents: csv.DictReader):
@@ -22,12 +27,15 @@ def parse_file(contents: csv.DictReader):
 
 def plot(data):
     tid = list(data.keys())
-    temperatur = list(data.values())
+    temperatur = [tid["temperatur"] for tid in data.values()]
+    lufttemperatur = [tid["lufttemperatur"] for tid in data.values()]
 
-    plt.plot(tid, temperatur)
+    plt.plot(tid, temperatur, label="vann temperatur")
+    plt.plot(tid, lufttemperatur, label="luft temperatur")
     plt.xlabel("Tid")
     plt.ylabel("Temperatur")
-    plt.title("Nordnes sjøbad temperatur i vannet over tid")
+    plt.title("Nordnes sjøbad temperatur over tid")
+    plt.legend()
     plt.grid()
     plt.show()
 
