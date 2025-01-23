@@ -54,14 +54,13 @@ def init_file(local_file: str):
 
 if __name__ == "__main__":
     local_file = "data.csv"
-    local_file_path = "./" + local_file
 
     data = {}
 
-    if not os.path.exists(local_file_path):
+    if not os.path.exists(local_file):
         init_file(local_file)
 
-    with open("./" + local_file_path, encoding="utf-8") as file:
+    with open(local_file, encoding="utf-8") as file:
         parse_file(csv.DictReader(file, delimiter=","))
 
     plot(data)
