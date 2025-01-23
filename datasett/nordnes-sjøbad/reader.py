@@ -42,11 +42,17 @@ def plot(data):
     plt.show()
 
 
-def init_file(local_file: str):
-    url = "https://raw.githubusercontent.com/hausnes/nordnes-sjobad/refs/heads/main/temperatur.csv"
+def safe_get(url: str) -> requests.Response:
     response = requests.get(url, stream=True)
     while response.status_code != 200:
         response = requests.get(url, stream=True)
+    return response
+
+
+def init_file(local_file: str):
+    response = safe_get(
+        "https://raw.githubusercontent.com/hausnes/nordnes-sjobad/refs/heads/main/temperatur.csv"
+    )
     with open(local_file, "wb") as file:
         for chunk in response.iter_content(chunk_size=8192):
             file.write(chunk)
