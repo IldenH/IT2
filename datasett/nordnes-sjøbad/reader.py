@@ -1,6 +1,8 @@
 import csv
 import matplotlib.pyplot as plt
 from datetime import datetime
+import requests
+import os
 
 
 def parse_row(row):
@@ -40,11 +42,26 @@ def plot(data):
     plt.show()
 
 
+def init_file(local_file: str):
+    url = "https://raw.githubusercontent.com/hausnes/nordnes-sjobad/refs/heads/main/temperatur.csv"
+    response = requests.get(url, stream=True)
+    while response.status_code != 200:
+        response = requests.get(url, stream=True)
+    with open(local_file, "wb") as file:
+        for chunk in response.iter_content(chunk_size=8192):
+            file.write(chunk)
+
+
 if __name__ == "__main__":
-    file = "./data.csv"
+    local_file = "data.csv"
+    local_file_path = "./" + local_file
+
     data = {}
 
-    with open(file, encoding="utf-8") as file:
+    if not os.path.exists(local_file_path):
+        init_file(local_file)
+
+    with open("./" + local_file_path, encoding="utf-8") as file:
         parse_file(csv.DictReader(file, delimiter=","))
 
     plot(data)

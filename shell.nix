@@ -9,6 +9,7 @@ with import <nixpkgs> {};
           with packages; [
             matplotlib
             pygame
+            requests
           ]
       ))
 
