@@ -49,13 +49,17 @@ def safe_get(url: str) -> requests.Response:
     return response
 
 
+def write_file(local_file: str, response: requests.Response):
+    with open(local_file, "wb") as file:
+        for chunk in response.iter_content(chunk_size=8192):
+            file.write(chunk)
+
+
 def init_file(local_file: str):
     response = safe_get(
         "https://raw.githubusercontent.com/hausnes/nordnes-sjobad/refs/heads/main/temperatur.csv"
     )
-    with open(local_file, "wb") as file:
-        for chunk in response.iter_content(chunk_size=8192):
-            file.write(chunk)
+    write_file(local_file, response)
 
 
 if __name__ == "__main__":
