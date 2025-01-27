@@ -10,6 +10,7 @@ with import <nixpkgs> {};
             matplotlib
             pygame
             requests
+            pandas
           ]
       ))
 
