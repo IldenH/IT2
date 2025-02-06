@@ -1,5 +1,6 @@
 import csv
 from datetime import datetime
+import matplotlib.pyplot as plt
 
 weekday = ["Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"]
 counts = {
@@ -19,4 +20,10 @@ with open("studietid.csv") as file:
         day = weekday[date.weekday()]
         counts[day] += 1
 
-print(counts)
+ukedager = list(counts.keys())
+antall = list(counts.values())
+plt.bar(ukedager, antall)
+plt.title("Studietid")
+plt.xlabel("Ukedag")
+plt.ylabel("Antall ganger")
+plt.show()
