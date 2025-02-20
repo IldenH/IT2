@@ -12,7 +12,7 @@ logging.basicConfig(
 df = pd.read_csv("data/WCA_export_Persons.tsv", delimiter="\t")
 logger.info("Read data")
 
-fig, ax = plt.subplots(2, 3)
+fig, ax = plt.subplots(2, 4)
 fig.suptitle("Persons", fontsize=16)
 fig.subplots_adjust(wspace=0.3, hspace=0.25)
 logger.info("Created figure")
@@ -38,7 +38,7 @@ df["id"].value_counts().value_counts().rename(lambda x: x - 1).tail(2).plot(
 )
 logger.info("Plot changes")
 
-names = df["name"].str.split(" ")
+names = df["name"].str.replace(r"\(.*?\)", "", regex=True).str.split(" ")
 first_names = names.str[0]
 first_names.value_counts().head(10).sort_values(ascending=True).plot(
     kind="barh", title="Firstnames", xlabel="Count", ylabel="Name", ax=ax[1][0]
@@ -61,6 +61,15 @@ unique_names.head(10).plot(
 )
 logger.info("Plot unique names")
 
-# TODO: name length
+# names[names.apply(len) == 9] can be used to see who has long names
+name_lengths = names.apply(len)
+name_lengths.value_counts().plot(
+    kind="bar",
+    title="Name length",
+    xlabel="Length",
+    ylabel="Total",
+    ax=ax[1][3],
+)
+logger.info("Plot name lengths")
 
 plt.show()
