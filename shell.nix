@@ -11,6 +11,7 @@ with import <nixpkgs> {};
             pygame
             requests
             pandas
+            pillow
           ]
       ))
 
