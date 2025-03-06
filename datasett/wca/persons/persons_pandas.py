@@ -9,7 +9,7 @@ logging.basicConfig(
     handlers=[logging.StreamHandler(), logging.FileHandler("persons.log", mode="w")],
 )
 
-df = pd.read_csv("data/WCA_export_Persons.tsv", delimiter="\t")
+df = pd.read_csv("../data/WCA_export_Persons.tsv", delimiter="\t")
 logger.info("Read data")
 
 fig, ax = plt.subplots(2, 4)

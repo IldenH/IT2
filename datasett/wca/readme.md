@@ -9,4 +9,4 @@ Noen av python filene bruker API-en, men de fleste bruker databasen lokalt grunn
 
 ## Tabeller
 
-[Persons (tabellen jeg har valgt å fokusere på)](persons.md)
+[Persons (tabellen jeg har valgt å fokusere på)](persons/readme.md)
