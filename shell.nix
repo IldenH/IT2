@@ -13,6 +13,7 @@ with import <nixpkgs> {};
             requests
             pandas
             pillow
+            pytest
 
             # python3 -m jupyterlab
             jupyterlab
